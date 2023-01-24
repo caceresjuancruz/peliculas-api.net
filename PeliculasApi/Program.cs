@@ -9,6 +9,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PeliculasapiContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
 
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,12 +22,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
